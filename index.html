@@ -185,30 +185,35 @@
         }
 
         function startDraw() {
-            if (currentStep < bombo1.length && bombo1.length === bombo2.length) {
+            if (bombo1.length === bombo2.length && bombo1.length > 0) {
                 document.getElementById('startBtn').disabled = true;
 
-                // Simulación de pausa para hacerlo más entretenido
-                setTimeout(() => {
+                // Mezcla los equipos
+                const drawPairs = [];
+                while (bombo1.length > 0) {
                     let team1 = bombo1.splice(Math.floor(Math.random() * bombo1.length), 1)[0];
                     let team2 = bombo2.splice(Math.floor(Math.random() * bombo2.length), 1)[0];
+                    drawPairs.push([team1, team2]);
+                }
 
-                    let resultDiv = document.createElement('div');
-                    resultDiv.className = 'match';
-                    resultDiv.innerHTML = `
-                        <div class="team-box">${team1}</div>
-                        <div class="team-box">${team2}</div>
-                    `;
-                    document.getElementById('result').appendChild(resultDiv);
-
-                    currentStep++;
-                    document.getElementById('startBtn').disabled = false;
-
-                    if (currentStep === bombo1.length) {
-                        document.getElementById('startBtn').disabled = true;
+                // Muestra los equipos uno por uno con una pausa
+                let index = 0;
+                function showNextPair() {
+                    if (index < drawPairs.length) {
+                        let [team1, team2] = drawPairs[index];
+                        document.getElementById('result').innerHTML += `
+                            <div class="match">
+                                <div class="team-box">${team1}</div>
+                                <div class="team-box">${team2}</div>
+                            </div>
+                        `;
+                        index++;
+                        setTimeout(showNextPair, 2000); // Pausa de 2 segundos entre cada par
+                    } else {
                         document.getElementById('startBtn').innerText = "Sorteo Completado";
                     }
-                }, 1000);
+                }
+                showNextPair();
             } else {
                 alert("Asegúrate de que ambos bombos tengan el mismo número de equipos.");
             }
