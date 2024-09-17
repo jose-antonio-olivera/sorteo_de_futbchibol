@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo de Fútbol</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .bombo {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        .bombo h3 {
+            margin-bottom: 15px;
+        }
+        .team {
+            padding: 10px;
+            background-color: #ecf0f1;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        #startBtn {
+            background-color: #27ae60;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #startBtn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sorteo de Fútbol</h1>
+
+    <!-- Formulario para agregar equipos -->
+    <h3>Agregar Equipos al Bombo</h3>
+    <div>
+        <input type="text" id="teamBombo1" placeholder="Agregar equipo al Bombo 1">
+        <button onclick="addTeam(1)">Agregar a Bombo 1</button>
+        <br><br>
+        <input type="text" id="teamBombo2" placeholder="Agregar equipo al Bombo 2">
+        <button onclick="addTeam(2)">Agregar a Bombo 2</button>
+    </div>
+
+    <div class="container">
+        <div class="bombo">
+            <h3>Bombo 1</h3>
+            <div id="bombo1" class="teams"></div>
+        </div>
+
+        <div class="bombo">
+            <h3>Bombo 2</h3>
+            <div id="bombo2" class="teams"></div>
+        </div>
+    </div>
+
+    <button id="startBtn" onclick="startDraw()">Iniciar Sorteo</button>
+
+    <div id="result"></div>
+
+    <script>
+        let bombo1 = [];
+        let bombo2 = [];
+        let currentStep = 0;
+
+        function addTeam(bomboNumber) {
+            let teamName;
+            if (bomboNumber === 1) {
+                teamName = document.getElementById("teamBombo1").value;
+                if (teamName) {
+                    bombo1.push(teamName);
+                    document.getElementById("bombo1").innerHTML += `<div class="team">${teamName}</div>`;
+                    document.getElementById("teamBombo1").value = ''; // Limpiar el campo
+                }
+            } else if (bomboNumber === 2) {
+                teamName = document.getElementById("teamBombo2").value;
+                if (teamName) {
+                    bombo2.push(teamName);
+                    document.getElementById("bombo2").innerHTML += `<div class="team">${teamName}</div>`;
+                    document.getElementById("teamBombo2").value = ''; // Limpiar el campo
+                }
+            }
+        }
+
+        function startDraw() {
+            if (currentStep < bombo1.length && bombo1.length === bombo2.length) {
+                document.getElementById('startBtn').disabled = true;
+
+                // Simulación de pausa para hacerlo más entretenido
+                setTimeout(() => {
+                    let team1 = bombo1.splice(Math.floor(Math.random() * bombo1.length), 1)[0];
+                    let team2 = bombo2.splice(Math.floor(Math.random() * bombo2.length), 1)[0];
+
+                    document.getElementById('result').innerHTML += `<p>${team1} vs ${team2}</p>`;
+
+                    currentStep++;
+                    document.getElementById('startBtn').disabled = false;
+
+                    if (currentStep === bombo1.length) {
+                        document.getElementById('startBtn').disabled = true;
+                        document.getElementById('startBtn').innerText = "Sorteo Completado";
+                    }
+                }, 1000);
+            } else {
+                alert("Asegúrate de que ambos bombos tengan el mismo número de equipos.");
+            }
+        }
+    </script>
+
+</body>
+</html>

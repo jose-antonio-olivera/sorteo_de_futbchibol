@@ -1,0 +1,72 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        color: #2c3e50;
+        padding: 20px 0;
+    }
+    .container {
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .bombo {
+        background-color: #3498db;
+        color: white;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+        width: 90%; /* Más pequeño en pantallas móviles */
+        max-width: 300px;
+    }
+    .bombo h3 {
+        margin-bottom: 15px;
+    }
+    .team {
+        padding: 10px;
+        background-color: #ecf0f1;
+        margin: 5px;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    #startBtn {
+        background-color: #27ae60;
+        color: white;
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        width: 90%; /* Asegura que el botón no sea demasiado grande en móviles */
+        max-width: 300px;
+    }
+    #startBtn:disabled {
+        background-color: #95a5a6;
+        cursor: not-allowed;
+    }
+    #result {
+        margin-top: 30px;
+    }
+
+    /* Ajustes para pantallas pequeñas */
+    @media (max-width: 600px) {
+        .bombo {
+            width: 90%; /* Bombos más pequeños en pantallas móviles */
+            max-width: 100%; 
+        }
+        .team {
+            font-size: 14px; /* Texto más pequeño en pantallas pequeñas */
+        }
+        #startBtn {
+            width: 100%;
+            font-size: 14px;
+        }
+    }
+</style>
